@@ -1,5 +1,6 @@
 package com.library.library_management.controller;
 
+import com.library.library_management.DTO.AuthorDto;
 import com.library.library_management.entity.Author;
 import com.library.library_management.entity.Book;
 import com.library.library_management.service.AuthorService;
@@ -17,7 +18,7 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    //  CREATE AUTHOR
+    // CREATE AUTHOR
     @PostMapping
     public Author createAuthor(@RequestBody Author author) {
         return authorService.createAuthor(author);
@@ -29,24 +30,28 @@ public class AuthorController {
         return authorService.getAllAuthors();
     }
 
-    //  UPDATE AUTHOR
+    // UPDATE AUTHOR
     @PutMapping("/{id}")
-    public Author updateAuthorById(@PathVariable int id, @RequestBody Author author) {
-
+    public Author updateAuthorById(@PathVariable long id, @RequestBody Author author) {
         return authorService.updateAuthorById(id, author);
     }
 
-    //  DELETE AUTHOR
+    // DELETE AUTHOR
     @DeleteMapping("/{id}")
-    public String deleteAuthorById(@PathVariable int id) {
+    public String deleteAuthorById(@PathVariable long id) {
         authorService.deleteAuthorById(id);
         return "Author has been deleted";
     }
 
-
-
+    // GET BOOKS BY AUTHOR
     @GetMapping("/{id}/books")
-    public List<Book>getBooksByAuthorId(@PathVariable int id) {
+    public List<Book> getBooksByAuthor(@PathVariable long id) {
         return authorService.getBooksByAuthorId(id);
+    }
+
+    // GET AUTHOR WITH BOOK NAMES
+    @GetMapping("/{id}/details")
+    public AuthorDto getAuthorDetails(@PathVariable long id) {
+        return authorService.getAuthorWithBooks(id);
     }
 }

@@ -27,14 +27,20 @@ public class BorrowRecordService {
     }
 
     // BORROW BOOK
-    public BorrowRecord borrowBook(Long userId, int bookId) {
+    public BorrowRecord borrowBook(Long userId, long bookId) {
 
+        // CHECK if book already borrowed
+        if (borrowRecordRepo.existsByBookIdAndReturnDateIsNull(bookId)) {
+            throw new RuntimeException("Book is already borrowed");
+        }
+//Fetch user
         AppUser user = appUserRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
+        //Fetch books
         Book book = bookRepo.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
+        //create Borrow records
         BorrowRecord record = new BorrowRecord();
         record.setUser(user);
         record.setBook(book);
@@ -54,7 +60,7 @@ public class BorrowRecordService {
         return borrowRecordRepo.save(record);
     }
 
-    // GET ALL
+    // GET ALL Records
     public List<BorrowRecord> getAllRecords() {
         return borrowRecordRepo.findAll();
     }

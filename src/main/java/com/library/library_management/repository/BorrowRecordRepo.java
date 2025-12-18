@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BorrowRecordRepo extends JpaRepository<BorrowRecord,Long> {
+    boolean existsByBookIdAndReturnDateIsNull(long bookId);
 }

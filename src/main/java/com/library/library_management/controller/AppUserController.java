@@ -1,5 +1,6 @@
 package com.library.library_management.controller;
 
+import com.library.library_management.DTO.UserDto;
 import com.library.library_management.entity.AppUser;
 import com.library.library_management.service.AppUserService;
 import org.springframework.web.bind.annotation.*;
@@ -18,19 +19,19 @@ public class AppUserController {
 
     // CREATE USER
     @PostMapping
-    public AppUser createUser(@RequestBody AppUser user) {
+    public UserDto createUser(@RequestBody AppUser user) {
         return appUserService.createUser(user);
     }
 
     // GET ALL USERS
     @GetMapping
-    public List<AppUser> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return appUserService.getAllUsers();
     }
 
     // UPDATE USER
     @PutMapping("/{id}")
-    public AppUser updateUser(@PathVariable Long id, @RequestBody AppUser user) {
+    public UserDto updateUser(@PathVariable Long id, @RequestBody AppUser user) {
         return appUserService.updateUser(id, user);
     }
 
